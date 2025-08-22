@@ -1,0 +1,69 @@
+#Quadratic Formula Solver
+
+import cmath
+
+#Enter Function and Read
+
+# Quadratic Formula Solver
+
+import cmath
+
+# Enter quadratic equation as a string
+Function = input("Enter a quadratic (e.g. x**2 - 3*x + 2): ")
+
+# Clean input
+Function = Function.replace(" ", "")                  # remove spaces
+Function = Function.replace("-", " -").replace("+", " +")
+terms = Function.split()
+print("Split terms:", terms)
+
+# Initialize coefficients
+a = b = c = 0
+
+# Parse coefficients
+for term in terms:
+    if "x**2" in term:          # quadratic term
+        coeff = term.replace("*x**2", "").replace("x**2", "")
+        if coeff in ("", "+"):
+            a = 1
+        elif coeff == "-":
+            a = -1
+        else:
+            a = int(coeff)
+
+    elif "x" in term:           # linear term
+        coeff = term.replace("*x", "").replace("x", "")
+        if coeff in ("", "+"):
+            b = 1
+        elif coeff == "-":
+            b = -1
+        else:
+            b = int(coeff)
+
+    else:                       # constant term
+        c = int(term)
+
+print(f"Coefficients: a={a}, b={b}, c={c}")
+
+# Solve quadratic
+roots = (
+    (-b + cmath.sqrt(b**2 - 4*a*c)) / (2*a),
+    (-b - cmath.sqrt(b**2 - 4*a*c)) / (2*a)
+)
+
+# Format output (hide "+0j" if roots are real)
+def clean_root(r):
+    return r.real if abs(r.imag) < 1e-10 else r
+
+print("Roots:", clean_root(roots[0]), ",", clean_root(roots[1]))
+
+
+
+
+
+
+
+
+
+  
+
