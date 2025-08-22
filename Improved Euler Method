@@ -1,0 +1,54 @@
+#Improved Euler Method Solver
+#Method Setup:
+import matplotlib.pyplot as plt
+
+results = []
+Differential_equation = input("Enter the equation in terms of x and y: ")
+h =  float(input("Enter the step size: "))
+X0 = float(input("Enter X0: "))
+Y0 = float(input("Enter Y0: "))
+X_end = float(input("Enter the point you wish to approximate: "))
+
+while X0 < X_end:
+    #Find f(x0,y0)                                                          
+    def f(X0,Y0):
+      x,y=X0,Y0
+      return eval(Differential_equation)
+    Initial_Cond_Res = f(X0,Y0)
+    
+    #find predictor
+    def predictor():
+        return Y0 + h*Initial_Cond_Res                                
+    predictor_res = predictor()
+    #Find Y1  
+    def Xn_plus_h(): # gives initial x value plus step size
+        return X0 + h
+    X_of_n_plus_h = Xn_plus_h()
+    
+
+    def Y1(): # gives approximation of y 
+        return Y0 + (h/2)*(Initial_Cond_Res + f(X_of_n_plus_h, predictor_res))
+
+    Y1 = Y1()
+    X0 = X_of_n_plus_h
+    Y0 = Y1
+    results.append((X0,Y0))  
+
+print("\nResults (Improved Euler Method):")
+print("   x      y")   
+print("-"*25)
+for x, y in results:
+    print(f"{x:.4f}\t{y:.4f}")
+
+#plot solution
+
+xs = [point[0] for point in results]
+ys = [point[1] for point in results]
+
+plt.plot(xs,ys, marker = 0, label= "Improved Euler Method")
+plt.xlabel("x")
+plt.ylabel("y")
+plt.title("Improved Euler Method")
+plt.legend
+plt.grid(True)
+plt.show()
